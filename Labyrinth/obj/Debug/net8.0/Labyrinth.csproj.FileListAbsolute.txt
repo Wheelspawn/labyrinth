@@ -1,0 +1,14 @@
+/home/nsage/labyrinth/Labyrinth/obj/Debug/net8.0/Labyrinth.GeneratedMSBuildEditorConfig.editorconfig
+/home/nsage/labyrinth/Labyrinth/obj/Debug/net8.0/Labyrinth.AssemblyInfoInputs.cache
+/home/nsage/labyrinth/Labyrinth/obj/Debug/net8.0/Labyrinth.AssemblyInfo.cs
+/home/nsage/labyrinth/Labyrinth/obj/Debug/net8.0/Labyrinth.csproj.CoreCompileInputs.cache
+/home/nsage/labyrinth/Labyrinth/bin/Debug/net8.0/Labyrinth
+/home/nsage/labyrinth/Labyrinth/bin/Debug/net8.0/Labyrinth.deps.json
+/home/nsage/labyrinth/Labyrinth/bin/Debug/net8.0/Labyrinth.runtimeconfig.json
+/home/nsage/labyrinth/Labyrinth/bin/Debug/net8.0/Labyrinth.dll
+/home/nsage/labyrinth/Labyrinth/bin/Debug/net8.0/Labyrinth.pdb
+/home/nsage/labyrinth/Labyrinth/obj/Debug/net8.0/Labyrinth.dll
+/home/nsage/labyrinth/Labyrinth/obj/Debug/net8.0/refint/Labyrinth.dll
+/home/nsage/labyrinth/Labyrinth/obj/Debug/net8.0/Labyrinth.pdb
+/home/nsage/labyrinth/Labyrinth/obj/Debug/net8.0/Labyrinth.genruntimeconfig.cache
+/home/nsage/labyrinth/Labyrinth/obj/Debug/net8.0/ref/Labyrinth.dll
