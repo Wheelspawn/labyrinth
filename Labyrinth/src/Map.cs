@@ -7,12 +7,13 @@ namespace Labyrinth
     {
         int m;
         int n;
-        Cell[][] _map;
+        Dictionary<(int,int),Entity> map;
+        // Cell[][] _map;
         public Player player;
         public List<Agent> npcs;
         public Map(String[] initString, Player p) {
 
-            _map = new Cell[initString.Length][];
+            map = new Dictionary<(int,int),Entity>();
 
             // Dictionary<(int,int),Entity> agents = new Dictionary<(int,int),Entity>();
             // agents.Add((player.M,player.N),player);
@@ -25,33 +26,29 @@ namespace Labyrinth
             
             for (int m = 0; m < initString.Length; m++)
             {
-                _map[m] = new Cell[initString[m].Length];
-
                 for (int n = 0; n < initString[m].Length; n++)
                 {
-                    _map[m][n] = new Cell(initString[m][n], m, n);
-
                     if (initString[m][n] == 'L')
                     {
                         this.npcs.Add(new Agent('L', m, n, ConsoleColor.Red));
                         // _map[m][n].Occupant = this.npcs.Last();
-                        _map[m][n].Occupant = new Item(' ', m, n);
+                        map.Add((m,n), new Item(' ', m, n));
                     }
                     else if (initString[m][n] == '╬')
                     {
-                        _map[m][n].Occupant = new Item(initString[m][n], m, n, ConsoleColor.DarkYellow, false);
+                        map.Add((m,n), new Item(initString[m][n], m, n, ConsoleColor.DarkYellow, false));
                     }
                     else if (initString[m][n] == '*')
                     {
-                        _map[m][n].Occupant = new Item(initString[m][n], m, n, ConsoleColor.Yellow, true);
+                        map.Add((m,n), new Item(initString[m][n], m, n, ConsoleColor.Yellow, true));
                     }
                     else if (initString[m][n] == '┐')
                     {
-                        _map[m][n].Occupant = new Item(initString[m][n], m, n, ConsoleColor.Gray, true);
+                        map.Add((m,n), new Item(initString[m][n], m, n, ConsoleColor.Gray, true));
                     }
                     else
                     {
-                        _map[m][n].Occupant = new Item(' ', m, n);
+                        map.Add((m,n), new Item(' ', m, n));
                     }
                 }
             }
@@ -64,23 +61,32 @@ namespace Labyrinth
             Dictionary<(int,int),(int,int)?> prev = new Dictionary<(int,int),(int,int)?>();
 
             // Djikstra's algorithm with player as source node
-            for (int i = 0; i < this._map.Length; i++)
+            for (int i = 0; i < this.m; i++)
             {
-                for (int j = 0; j < this._map[i].Length; j++)
+                for (int j = 0; j < this.n; j++)
                 {
-                    Cell v = this._map[i][j];
-                    if (v.IsPassable)
+                    if (this.map.ContainsKey((i,j)))
                     {
-                        if (this.player.M == i && this.player.N == j)
+                        Entity v = this.map[(i,j)];
+                        if (v.IsPassable)
                         {
-                            dist.Add((v.M,v.N),0.0);
+                            if (this.player.M == i && this.player.N == j)
+                            {
+                                dist.Add((v.M,v.N),0.0);
+                            }
+                            else
+                            {
+                                dist.Add((v.M,v.N),System.Double.MaxValue);
+                            }
+                            prev.Add((v.M,v.N),null);
+                            q.Add((v.M,v.N));
                         }
-                        else
-                        {
-                            dist.Add((v.M,v.N),System.Double.MaxValue);
-                        }
-                        prev.Add((v.M,v.N),null);
-                        q.Add((v.M,v.N));
+                    }
+                    else
+                    {
+                        dist.Add((i,j),System.Double.MaxValue);
+                        prev.Add((i,j),null);
+                        q.Add((i,j));
                     }
                 }
             }
@@ -107,15 +113,13 @@ namespace Labyrinth
                                 }
                             }
                         }
-                        catch (IndexOutOfRangeException e)
+                        catch (IndexOutOfRangeException)
                         {
                             continue;
                         }
                     }
                 }
             }
-
-            Cell target = this._map[this.player.M][this.player.N];
 
             for (int k = 0; k < this.npcs.Count; k++)
             {
@@ -153,11 +157,15 @@ namespace Labyrinth
                 for (int n = 0; n < this.n; n++)
                 {
                     Console.SetCursorPosition(n,m);
-                    if (this._map[m][n].Occupant != null)
+                    if (this.map.ContainsKey((m,n)))
                     {
                         // Console.ForegroundColor = this._map[m][n].Occupant.Color;
-                        Console.Write(this._map[m][n].Occupant.Ascii);
+                        Console.Write(this.map[(m,n)].Ascii);
                         // Console.ResetColor();
+                    }
+                    else
+                    {
+                        Console.Write(" ");
                     }
                 }
             }
@@ -172,10 +180,12 @@ namespace Labyrinth
 
         public bool IsPassable(int m, int n)
         {
-            return this._map[m][n].IsPassable;
+            if (this.map.ContainsKey((m,n)))
+            {
+                return this.map[(m,n)].IsPassable;
+            }
+            return true;
         }
-
-        
     }
 }
 

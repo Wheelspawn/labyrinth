@@ -82,8 +82,6 @@ namespace Labyrinth
             else
             { input = Console.ReadKey(true).Key; }
 
-            Console.Clear();
-
             while (input != ConsoleKey.Escape)
             {
                 if (movementKeyMappings.ContainsKey(input))
@@ -111,6 +109,7 @@ namespace Labyrinth
                 else
                 { input = Console.ReadKey(true).Key; }
 
+                Console.Clear();
             }
         }
     }
